@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Sistema de Gestión de Ganado Lechero
 
 El Sistema de Gestión de Ganado Lechero es una aplicación diseñada para facilitar el registro y seguimiento del ganado lechero mediante el uso de códigos QR. Permitirá a los ganaderos registrar la producción de leche, hacer seguimiento a vacunas, gestionar la reproducción y recibir notificaciones sobre eventos importantes.
@@ -45,8 +43,3 @@ El sistema se divide en módulos que trabajan juntos para gestionar el ganado de
 
 -Reportes de reproducción con historial de celos, inseminaciones y partos.
 
-
-
-=======
-# Sistema de Gestión Ganado Lechero
->>>>>>> f0a1cd0 (Añadir archivo README inicial)
