@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Sistema de Gestión de Ganado Lechero
 
@@ -46,3 +47,6 @@ El sistema se divide en módulos que trabajan juntos para gestionar el ganado de
 
 
 
+=======
+# Sistema de Gestión Ganado Lechero
+>>>>>>> f0a1cd0 (Añadir archivo README inicial)
