@@ -1,0 +1,177 @@
+//SISTEMA DE GESTION DE GANADO LECHERO
+
+class Vaca { //Se crea la clase vaca
+    constructor(id, nombre, edad, produccionPromedio) {
+        // Datos básicos
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.produccionPromedio = produccionPromedio;
+        
+        // Arrays para almacenar registros
+        this.vacunas = [];       // Historial de vacunas
+        this.produccion = [];    // Registros de producción
+        this.reproduccion = [];  // Eventos reproductivos
+    }
+
+    agregarVacuna(nombreVacuna, fecha) { //Metodo para agregar vacunas
+        this.vacunas.push({ nombreVacuna, fecha });
+    }
+
+    registrarProduccion(litros, fecha) { //Metodo para registrar produccion
+        this.produccion.push({ litros, fecha });
+    }
+
+    registrarEventoReproductivo(evento, fecha) { //Metodo para regstrar evento reproductivo
+        this.reproduccion.push({ evento, fecha });
+    }
+}
+
+
+class SistemaGanado { //Se crea la clase sistema de ganado
+    constructor() {
+        // Array que almacena todas las vacas registradas
+        this.vacas = [];
+    }
+
+    registrarVaca() {//Metodo para registrar vaca
+        // Solicitar datos al usuario
+        const id = prompt("Número de placa (ID):");
+        const nombre = prompt("Nombre de la vaca:");
+        const edad = prompt("Edad (años):");
+        const produccionPromedio = prompt("Producción promedio (litros/día):");
+
+        // Crear nueva instancia de Vaca
+        const nuevaVaca = new Vaca(id, nombre, edad, produccionPromedio);
+        // Agregar al array de vacas
+        this.vacas.push(nuevaVaca);
+        // Confirmación
+        console.log(` ${nombre} registrada (ID: ${id})`);
+    }
+
+    registrarProduccion() { //Metodo para registar produccion
+        // Buscar vaca por ID
+        const id = prompt("ID de la vaca:");
+        const vaca = this.buscarVaca(id);
+
+        if (vaca) {
+            // Solicitar datos de producción
+            const litros = prompt("Litros producidos:");
+            const fecha = new Date().toLocaleDateString();
+            
+            // Registrar producción
+            vaca.registrarProduccion(litros, fecha);
+            console.log(` ${litros}L registrados para ${vaca.nombre}`);
+        } else {
+            console.log(" Vaca no encontrada");
+        }
+    }
+
+    registrarVacuna() { //Metodo para agregar vacunas
+        // Buscar vaca por ID
+        const id = prompt("ID de la vaca:");
+        const vaca = this.buscarVaca(id);
+
+        if (vaca) {
+            // Solicitar datos de vacuna
+            const nombreVacuna = prompt("Nombre de la vacuna:");
+            const fecha = prompt("Fecha (dd/mm/aaaa):");
+            
+            // Registrar vacuna
+            vaca.agregarVacuna(nombreVacuna, fecha);
+            console.log(` Vacuna aplicada a ${vaca.nombre}`);
+        } else {
+            console.log(" Vaca no encontrada");
+        }
+    }
+
+    registrarReproduccion() { //Metodo para registar reproduccion
+        // Buscar vaca por ID
+        const id = prompt("ID de la vaca:");
+        const vaca = this.buscarVaca(id);
+
+        if (vaca) {
+            // Mostrar opciones
+            console.log("1. Celo\n2. Inseminación\n3. Parto");
+            const opcion = prompt("Tipo de evento (1-3):");
+            
+            // Determinar tipo de evento
+            let evento;
+            switch(opcion) {
+                case "1": evento = "Celo"; break;
+                case "2": evento = "Inseminación"; break;
+                case "3": evento = "Parto"; break;
+                default: evento = "Otro";
+            }
+            
+            // Solicitar fecha
+            const fecha = prompt("Fecha (dd/mm/aaaa):");
+            
+            // Registrar evento
+            vaca.registrarEventoReproductivo(evento, fecha);
+            console.log(` ${evento} registrado para ${vaca.nombre}`);
+        } else {
+            console.log(" Vaca no encontrada");
+        }
+    }
+
+    generarReportes() { //Metodo para generar reportes
+        console.log("\n REPORTES");
+        
+        // Recorrer todas las vacas
+        this.vacas.forEach(vaca => {
+            console.log(`\n ${vaca.nombre} (ID: ${vaca.id})`);
+            console.log("Vacunas:", vaca.vacunas.length);
+            console.log("Producción:", vaca.produccion.length, "registros");
+            console.log("Eventos reproductivos:", vaca.reproduccion.length);
+        });
+    }
+
+    buscarVaca(id) { //Metodo para buscar vaca por ID
+        return this.vacas.find(vaca => vaca.id === id);
+    }
+}
+
+
+function mostrarMenu() { //Metodo para mostar el menu
+    console.log("\n=== MENÚ PRINCIPAL ===");
+    console.log("1. Registrar vaca");
+    console.log("2. Registrar producción");
+    console.log("3. Registrar vacuna");
+    console.log("4. Registrar reproducción");
+    console.log("5. Generar reportes");
+    console.log("6. Salir");
+    return prompt("Seleccione una opción:");
+}
+
+
+function menu() { //Metodo para el menu principal
+    // Crear instancia del sistema
+    const sistema = new SistemaGanado();
+    
+    // Mensaje de bienvenida
+    console.log(" SISTEMA DE GANADO LECHERO");
+    
+    // Variable para controlar el bucle
+    let opcion;
+    
+    // Bucle principal
+    do {
+        // Mostrar menú y obtener selección
+        opcion = mostrarMenu();
+        
+        // Procesar opción seleccionada
+        switch(opcion) {
+            case "1": sistema.registrarVaca(); break;
+            case "2": sistema.registrarProduccion(); break;
+            case "3": sistema.registrarVacuna(); break;
+            case "4": sistema.registrarReproduccion(); break;
+            case "5": sistema.generarReportes(); break;
+            case "6": console.log(" ¡Hasta pronto!"); break;
+            default: console.log(" Opción no válida");
+        }
+    } while (opcion !== "6"); // Continuar hasta que se seleccione "Salir"
+}
+
+// Iniciar la aplicación
+menu();
